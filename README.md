@@ -7,7 +7,7 @@ Fixing the schema allows for several use case. Most important ones:
 * JSON schema validation
 * Automatically generated models for handling data objects
 
-### Preperation
+### Preparation
 
 As the `openapi-patcher` will generate both JSON schema and an OpenAPI specification, both files are required.
 
@@ -15,28 +15,13 @@ Notice that the `openapi-patcher` assumes, that OpenAPI specification contains t
 
 Paths can be specified by command line with default paths:
 
-* `api.yaml`: OpenAPI specification of the KStore. This should't change between releases.
+* `api.yaml`: OpenAPI specification of the KStore. This shouldn't change between releases.
 * `schema.json`: Latest JSON schema of the `data-model`. This might change every release.
 
-### Bereinigung des Schemas via openapi-patcher
+### Cleaning the Schema via openapi-patcher
 
-Da das offizielle JSON-Schema der DatenPlattform (Materna) Korrekturen benötigt, kann es nicht direkt verwendet werden. Beispielsweise wird `mobidp.common.Geometry` in der Datenplattform nicht direkt genutzt, sondern durch LocationTech [JTS (Java Topology Suite)](https://github.com/locationtech/jts) ersetzt, weshalb das Objekt im Ursprungsschema nicht korrekt definiert ist.
-Das Schema muss daher vorab über das Tool `openapi-patcher` angepasst werden.
-
-#### Ausführung von openapi-patcher
-
-Die Parameterübergabe erfolgt über `sbt run`. Nachfolgende Argumente überschreiben die Standardwerte (`-a api.yaml -j schema.json -o patched-`):
-
-| Langer Parameter | Kurzer Parameter | Standardwert | Beschreibung |
-| --- | --- | --- | --- |
-| `--openapi-spec` | `-a` | `api.yaml` | Pfad zur OpenAPI-Spezifikationsdatei |
-| `--json-schema` | `-j` | `schema.json` | Pfad zur JSON-Schema-Datei |
-| `--output` | `-o` | `patched-` | Präfix oder Ausgabe-Verzeichnis |
-
-##### Aufrufbeispiele
-
-* Lange Option: `sbt "run --openapi-spec my-api.yaml --json-schema my-schema.json --output out/"`
-* Kurze Option: `sbt "run -a api.yaml -j schema.json -o patched-"`
+Since the official JSON schema of the DatenPlattform (Materna) requires corrections, it cannot be used directly. For example, `mobidp.common.Geometry` is not used directly in the data platform, but is replaced by LocationTech [JTS (Java Topology Suite)](https://github.com/locationtech/jts), which is why the object is not correctly defined in the original schema.
+Therefore, the schema must be adjusted beforehand using the `openapi-patcher` tool.
 
 ### Usage
 
@@ -44,6 +29,21 @@ This is a normal sbt project. You can compile code with `sbt compile`, run it wi
 
 For more information on the sbt-dotty plugin, see the
 [scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+
+#### Running openapi-patcher
+
+Parameters are passed via `sbt run`. The following arguments override the default values (`-a api.yaml -j schema.json -o patched-`):
+
+| Long Parameter | Short Parameter | Default Value | Description |
+| --- | --- | --- | --- |
+| `--openapi-spec` | `-a` | `api.yaml` | Path to the OpenAPI specification file |
+| `--json-schema` | `-j` | `schema.json` | Path to the JSON schema file |
+| `--output` | `-o` | `patched-` | Prefix or output directory |
+
+##### Usage Examples
+
+* Long option: `sbt "run --openapi-spec my-api.yaml --json-schema my-schema.json --output out/"`
+* Short option: `sbt "run -a api.yaml -j schema.json -o patched-"`
 
 #### Binary
 
