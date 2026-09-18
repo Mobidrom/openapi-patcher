@@ -49,5 +49,12 @@ Parameters are passed via `sbt run`. The following arguments override the defaul
 
 The project is configured to compile using Scala Native.
 Scala Native will therefore generate a native binary (`target/scala-<version>/openapi-patcher`), that does not require a Java Runtime.
+To build the binary run:
+
+```sh
+sbt nativeLinkReleaseFull
+```
 
 As the OpenAPI patcher shouldn't change frequently, the binary can be built once and used to patch multiple JSON schema files.
+
+For a less optimized build use `sbt nativeLink` instead.
